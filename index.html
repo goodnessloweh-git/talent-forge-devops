@@ -1,11 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Status Page</title>
+  <meta charset="UTF-8">
+  <title>My DevOps App 🚀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff7a18, #000000);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    .status {
+      color: #00ffcc;
+      font-weight: bold;
+    }
+
+    button {
+      background: #ff7a18;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff9a3c;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Goodness DevOps Status Page 🚀</h1>
-  <p>✅ All systems go</p>
+  <div class="card">
+    <h1>Hello 🚀</h1>
+    <p>This is my first DevOps deployment</p>
+
+    <p class="status">🟢 All systems operational</p>
+
+    <button onclick="alert('You are live on the internet! 🌍')">
+      Check Status
+    </button>
+
+    <div class="footer">
+      Built by Goodness 💻
+    </div>
+  </div>
 </body>
 </html>
-<p>🐳 Docker deployment coming soon</p>
