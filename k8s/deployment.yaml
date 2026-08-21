@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: talent-forge
+  labels:
+    app: talent-forge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: talent-forge
+  template:
+    metadata:
+      labels:
+        app: talent-forge
+    spec:
+      containers:
+        - name: talent-forge
+          image: talent-forge:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: talent-forge-config
+            - secretRef:
+                name: talent-forge-secret
