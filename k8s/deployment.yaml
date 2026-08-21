@@ -5,7 +5,7 @@ metadata:
   labels:
     app: talent-forge
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: talent-forge
@@ -25,3 +25,22 @@ spec:
                 name: talent-forge-config
             - secretRef:
                 name: talent-forge-secret
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 5
