@@ -38,7 +38,7 @@ Code → GitHub → CI/CD → Docker Hub → Render → Live App → Monitoring
 
 ## 🛠️ Project Structure
 
-```
+
 talent-forge-devops/
 │
 ├── index.html
@@ -46,9 +46,7 @@ talent-forge-devops/
 └── .github/
     └── workflows/
         └── deploy.yml
-```
 
----
 
 ##  Docker Setup
 
@@ -56,19 +54,19 @@ Build the image locally:
 
 ```bash
 docker build -t myapp .
-```
+
 
 Run the container:
 
 ```bash
 docker run -p 8080:80 myapp
-```
+
 
 Then visit:
 
-```
+
 https://talent-forge-app.onrender.com
-```
+
 
 
 ## 🔁 CI/CD Pipeline
@@ -158,8 +156,34 @@ kubectl port-forward svc/talent-forge 8081:80
 ```
 Then visit `http://localhost:8081`.
 
+PROBLEMS FACED AND FIX
+
+1. Ingress controller stuck "creating" for 10+ minutes
+The nginx ingress controller pod sat in ContainerCreating and never finished. Turned out its image had frozen mid-download.
+Fix: Ran docker pull on your Mac to download the image directly, then minikube image load to hand it straight to minikube instead of letting minikube fetch it itself.
+
+2. Browser said "This site can't be reached" (ERR_CONNECTION_REFUSED)
+Even though DNS resolved talent-forge.local correctly, nothing answered on port 80.
+Fix: Discovered minikube tunnel had stopped running (it only works while actively open). Switched to kubectl port-forward against the ingress-nginx controller service instead — more reliable for testing.
+
+3. Git said "nothing to commit" despite new files sitting right there
+git add k8s/ failed, and git status looked broken.
+Fix: Found an accidental nested .git folder inside k8s/ from an earlier stray git init. Deleted it (rm -rf .git inside that folder), which let the real project repo track the files normally.
+
+4. GitHub rejected password authentication
+git push failed: "Password authentication is not supported for Git operations."
+Fix: Generated a Personal Access Token on GitHub and used it in place of the password.
+
+5. GitHub rejected the push specifically on the workflow file
+Everything else pushed fine, but .github/workflows/deploy.yml was blocked: token missing workflow scope.
+Fix: Generated a new token with both repo and workflow scopes checked.
+
+6. Self-hosted runner download kept failing (~125MB file)
+Multiple attempts died mid-download with "Operation timed out" and "Could not resolve host."
+Fix: Identified it as a home internet issue, not a setup mistake. Left the CI/CD deploy job fully written and committed, with runner registration deferred until a more stable connection.
+
+
+
 Author
 
 Built by Goodness — learning DevOps by doing real projects 
-
-
